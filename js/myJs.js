@@ -22,20 +22,24 @@ window.onload= function () {
      * 此函数被绑定到window对象的hashchange事件上
      */
     function changeUrl(){
+		var container = document.getElementById("container");
         var url=window.location.hash.replace("#","");
         if(url===""){
             url="home";  //home page
         }
         if(url==="home"){
-            loading();
+            container.innerHTML="";
+			loading();
             ajaxReauest("post/index.json",'GET','',rendMain);
         }else if(url.indexOf("tag")!=-1){
-            loading();
+            container.innerHTML="";
+			loading();
             ajaxReauest("post/index.json",'GET','',function(str){
                 initTags(str);
                 rendClassifyMain(url.substr(3));
             });
         }else {
+            container.innerHTML="";
             loading();
             ajaxReauest(url+".html","GET",'',rendBlog);
             ajaxReauest("post/index.json",'GET','',initTags);  //重新请求目录列表文件以渲染分类列表
